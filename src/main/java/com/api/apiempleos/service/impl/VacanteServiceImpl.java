@@ -2,7 +2,9 @@ package com.api.apiempleos.service.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,5 +70,20 @@ public class VacanteServiceImpl implements VacanteService {
             }
         });
     }
+
+    @Override
+    public Map<String, Long> obtenerContadores() {
+        long vacantesActivas = vacanteRepository.findAll().stream()
+                .filter(vacante -> vacante.getEstado().equalsIgnoreCase("activa")).count();
+        long vacantesExpiradas = vacanteRepository.findAll().stream().count() - vacantesActivas;
+
+        Map<String, Long> contadores = new HashMap<>();
+        contadores.put("activas", vacantesActivas);
+        contadores.put("expiradas", vacantesExpiradas);
+
+        return contadores;
+    }
+
+    
 
 }

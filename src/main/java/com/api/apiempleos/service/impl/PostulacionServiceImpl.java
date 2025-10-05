@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.api.apiempleos.dto.VacantePostulacion;
 import com.api.apiempleos.entity.Postulacion;
 import com.api.apiempleos.repository.PostulacionRepository;
 import com.api.apiempleos.service.PostulacionService;
@@ -108,6 +110,15 @@ public class PostulacionServiceImpl implements PostulacionService {
                 + "\nVacante ID: " + postulacion.getVacanteId()
                 + "\nArchivo: " + postulacion.getCvPath());
         mailSender.send(message);
+    }
+
+    @Override
+    public List<VacantePostulacion> obtenerTop5PostulacionesPorVacante() {
+        return postulacionRepository.obtenerTop5PostulacionesPorVacanteSP().stream()
+                .map(fila -> new VacantePostulacion(
+                        (String) fila[0],
+                        ((Number) fila[1]).intValue()))
+                .toList();
     }
 
 }
