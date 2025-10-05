@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.api.apiempleos.entity.Postulacion;
 
 public interface PostulacionService {
-    void guardarPostulacion(Postulacion postulacion);
+    Postulacion guardarPostulacion(Postulacion postulacion);
 
     String guardarArchivo(MultipartFile archivo);
 

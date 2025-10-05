@@ -35,8 +35,8 @@ public class PostulacionServiceImpl implements PostulacionService {
 
     @Override
     @Transactional
-    public void guardarPostulacion(Postulacion postulacion) {
-        postulacionRepository.save(postulacion);
+    public Postulacion guardarPostulacion(Postulacion postulacion) {
+        return postulacionRepository.save(postulacion);
     }
 
     @Override

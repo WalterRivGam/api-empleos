@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +28,6 @@ public class VacanteController {
      * 
      * @return vacantes activas
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/vacantes")
     public ResponseEntity<List<Vacante>> obtenerVacantes() {
 
@@ -51,7 +49,6 @@ public class VacanteController {
      * @param id
      * @return vacante por ID
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/vacantes/{id}")
     public ResponseEntity<Vacante> obtenerVacantePorId(
             @PathVariable Integer id) {
@@ -74,7 +71,6 @@ public class VacanteController {
      * @param vacanteDetalles
      * @return vacante actualizada
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/vacantes/{id}")
     public ResponseEntity<Vacante> actualizarVacante(
             @PathVariable Integer id,
@@ -109,7 +105,6 @@ public class VacanteController {
      * @param nuevaVacante
      * @return vacante creada
      */
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/vacantes")
     public ResponseEntity<Vacante> crearVacante(@RequestBody Vacante nuevaVacante) {
         try {

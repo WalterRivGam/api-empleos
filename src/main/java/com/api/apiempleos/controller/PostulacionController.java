@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ public class PostulacionController {
     }
 
     @PostMapping("/postulaciones")
-    public ResponseEntity<String> recibirPostulacion(
+    public ResponseEntity<Postulacion> recibirPostulacion(
             @RequestParam("nombre") String nombre,
             @RequestParam("email") String email,
             @RequestParam("telefono") String telefono,
@@ -48,14 +49,14 @@ public class PostulacionController {
             postulacion.setProcesadoRpa(false);
             postulacion.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 
-            postulacionService.guardarPostulacion(postulacion);
+            postulacion = postulacionService.guardarPostulacion(postulacion);
 
             postulacionService.registrarEnCSV(postulacion);
             postulacionService.enviarNotificacion(postulacion);
 
-            return ResponseEntity.ok("Postulación recibida correctamente.");
+            return ResponseEntity.ok(postulacion);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al procesar la postulación: " + e.getMessage());
+            return ResponseEntity.status(500).build();
         }
     }
 }
